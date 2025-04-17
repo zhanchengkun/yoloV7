@@ -31,7 +31,14 @@ def detect(save_img=False):
     half = device.type != 'cpu'  # half precision only supported on CUDA
 
     # Load model
-    model = attempt_load(weights, map_location=device)  # load FP32 model
+     #  model =  attempt_load(weights, map_location=device)  # load FP32 model
+    # model =  torch.load(weights, map_location=device, weights_only=False) 
+    
+    # model = torch.load(weights, map_location=device, weights_only=False)['model']
+    weights = weights[0] if isinstance(weights, list) else weights  # 确保 weights 是字符串
+    model = torch.load(weights, map_location=device, weights_only=False)['model']
+
+    model.float()
     stride = int(model.stride.max())  # model stride
     imgsz = check_img_size(imgsz, s=stride)  # check img_size
 
@@ -54,6 +61,7 @@ def detect(save_img=False):
         cudnn.benchmark = True  # set True to speed up constant image size inference
         dataset = LoadStreams(source, img_size=imgsz, stride=stride)
     else:
+        print(f"Loading images from source: {source}")
         dataset = LoadImages(source, img_size=imgsz, stride=stride)
 
     # Get names and colors
