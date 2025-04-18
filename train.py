@@ -520,7 +520,10 @@ def train(hyp, opt, device, tb_writer=None):
         final = best if best.exists() else last  # final model
         for f in last, best:
             if f.exists():
-                strip_optimizer(f)  # strip optimizers
+                 # 保留原始pt文件，并在同目录下生成精简版
+                stripped_path = f.parent / (f.stem + '-stripped.pt')
+                strip_optimizer(f, stripped_path)
+                # strip_optimizer(f)  # strip optimizers
         if opt.bucket:
             os.system(f'gsutil cp {final} gs://{opt.bucket}/weights')  # upload
         if wandb_logger.wandb and not opt.evolve:  # Log the stripped model
