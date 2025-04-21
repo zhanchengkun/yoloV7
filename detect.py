@@ -1,7 +1,7 @@
 import argparse
 import time
 from pathlib import Path
-
+import xml.etree.ElementTree as ET
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
@@ -128,6 +128,12 @@ def detect(save_img=False):
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
+                        # x1, y1, x2, y2 = [int(v) for v in xyxy]
+                        # # 文件名、类别、坐标、置信度
+                        # result_line = f"{p.name} {int(cls)} {conf:.4f} {x1} {y1} {x2} {y2}\n"
+                        # # 保存到总的 results.txt
+                        # with open(str(save_dir / 'results.txt'), 'a') as f:
+                        #         f.write(result_line)
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if opt.save_conf else (cls, *xywh)  # label format
                         with open(txt_path + '.txt', 'a') as f:
@@ -164,7 +170,29 @@ def detect(save_img=False):
                             save_path += '.mp4'
                         vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
+            # if save_txt:  # 你可以用 save_txt 控制是否保存 xml
+            #     annotation = ET.Element('annotation')
+            #     ET.SubElement(annotation, 'filename').text = p.name
+            #     size = ET.SubElement(annotation, 'size')
+            #     ET.SubElement(size, 'width').text = str(im0.shape[1])
+            #     ET.SubElement(size, 'height').text = str(im0.shape[0])
+            #     ET.SubElement(size, 'depth').text = str(im0.shape[2]) if len(im0.shape) == 3 else '1'
 
+            #     for *xyxy, conf, cls in reversed(det):
+            #         obj = ET.SubElement(annotation, 'object')
+            #         ET.SubElement(obj, 'name').text = names[int(cls)]
+            #         ET.SubElement(obj, 'confidence').text = f'{conf:.4f}'
+            #         bndbox = ET.SubElement(obj, 'bndbox')
+            #         x1, y1, x2, y2 = [int(v) for v in xyxy]
+            #         ET.SubElement(bndbox, 'xmin').text = str(x1)
+            #         ET.SubElement(bndbox, 'ymin').text = str(y1)
+            #         ET.SubElement(bndbox, 'xmax').text = str(x2)
+            #         ET.SubElement(bndbox, 'ymax').text = str(y2)
+
+            #     # 保存 xml 文件
+            #     xml_path = str(save_dir / (p.stem + '.xml'))
+            #     tree = ET.ElementTree(annotation)
+            #     tree.write(xml_path, encoding='utf-8')
     if save_txt or save_img:
         s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
         #print(f"Results saved to {save_dir}{s}")
