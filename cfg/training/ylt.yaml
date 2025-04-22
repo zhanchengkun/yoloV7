@@ -1,7 +1,7 @@
 # parameters
 nc: 4 # number of classes
-depth_multiple: 1.0  # 控制模型深度
-width_multiple: 1.0  # 控制模型宽度
+depth_multiple: 0.33  # 控制模型深度
+width_multiple: 0.50  # 控制模型宽度
 
 # anchors
 anchors:
