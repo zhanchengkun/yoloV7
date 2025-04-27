@@ -20,7 +20,8 @@
 *.data
 *.json
 *.cfg
-P6/*
+P6*/
+P5*/
 !setup.cfg
 !cfg/yolov3*.cfg
 
