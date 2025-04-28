@@ -1,31 +1,30 @@
-lr0: 0.008  # initial learning rate (SGD=1E-2, Adam=1E-3)
-lrf: 0.1  # final OneCycleLR learning rate (lr0 * lrf)
-momentum: 0.95  # SGD momentum/Adam beta1
-weight_decay: 0.0004  # optimizer weight decay 5e-4
-warmup_epochs: 5.0  # warmup epochs (fractions ok)
-warmup_momentum: 0.8  # warmup initial momentum
-warmup_bias_lr: 0.1  # warmup initial bias lr
-box: 0.1  # box loss gain
-cls: 0.4  # cls loss gain
-cls_pw: 1.0  # cls BCELoss positive_weight
-obj: 0.8  # obj loss gain (scale with pixels)
-obj_pw: 1.0  # obj BCELoss positive_weight
-iou_t: 0.25  # IoU training threshold
-anchor_t: 4.0  # anchor-multiple threshold
-# anchors: 3  # anchors per output layer (0 to ignore)
-fl_gamma: 0.5  # focal loss gamma (efficientDet default gamma=1.5)
-hsv_h: 0.015  # image HSV-Hue augmentation (fraction)
-hsv_s: 0.7  # image HSV-Saturation augmentation (fraction)
-hsv_v: 0.4  # image HSV-Value augmentation (fraction)
-degrees: 0.1  # image rotation (+/- deg)
-translate: 0.2  # image translation (+/- fraction)
-scale: 0.8  # image scale (+/- gain)
-shear: 0.1  # image shear (+/- deg)
-perspective: 0.0001  # image perspective (+/- fraction), range 0-0.001
-flipud: 0.1  # image flip up-down (probability)
-fliplr: 0.5  # image flip left-right (probability)
-mosaic: 1.0  # image mosaic (probability)
-mixup: 0.2  # image mixup (probability)
-copy_paste: 0.1  # image copy paste (probability)
-paste_in: 0.15  # image copy paste (probability), use 0 for faster training
-loss_ota: 1 # use ComputeLossOTA, use 0 for faster training
+lr0: 0.004  # 大幅降低初始学习率以确保稳定性
+lrf: 0.1  # 保持不变
+momentum: 0.937  # 恢复到原始值，避免过大动量导致不稳定
+weight_decay: 0.0005  # 恢复到原始值
+warmup_epochs: 10.0  # 增加预热轮数，使训练更加平稳
+warmup_momentum: 0.8  # 保持不变
+warmup_bias_lr: 0.05  # 降低预热期的偏置学习率
+box: 0.08  # 恢复到原始值
+cls: 0.3  # 恢复到原始值
+cls_pw: 1.0  # 保持不变
+obj: 0.7  # 恢复到原始值
+obj_pw: 1.0  # 保持不变
+iou_t: 0.20  # 恢复到原始值
+anchor_t: 4.0  # 保持不变
+fl_gamma: 0.0  # 暂时关闭focal loss
+hsv_h: 0.015  # 保持不变
+hsv_s: 0.7  # 保持不变
+hsv_v: 0.4  # 保持不变
+degrees: 0.0  # 恢复到原始值，暂时关闭旋转增强
+translate: 0.2  # 保持不变
+scale: 0.9  # 恢复到原始值
+shear: 0.0  # 恢复到原始值，暂时关闭剪切增强
+perspective: 0.0  # 恢复到原始值，暂时关闭透视变换
+flipud: 0.0  # 恢复到原始值
+fliplr: 0.5  # 保持不变
+mosaic: 1.0  # 保持不变
+mixup: 0.15  # 恢复到原始值
+copy_paste: 0.0  # 恢复到原始值
+paste_in: 0.15  # 保持不变
+loss_ota: 1  # 保持不变
