@@ -1,4 +1,4 @@
-lr0: 0.005
+lr0: 0.01
 lrf: 0.2
 momentum: 0.937
 weight_decay: 0.0005
