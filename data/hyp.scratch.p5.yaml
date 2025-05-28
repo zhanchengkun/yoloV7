@@ -5,8 +5,8 @@ weight_decay: 0.0005
 warmup_epochs: 3.0
 warmup_momentum: 0.8
 warmup_bias_lr: 0.1
-box: 0.03
-cls: 0.8
+box: 0.05
+cls: 0.2
 cls_pw: 1.0
 obj: 0.7
 obj_pw: 1.0
