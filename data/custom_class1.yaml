@@ -1,0 +1,19 @@
+# Train/val/test sets
+path: ./coco/images  # 数据集根目录
+train: ./coco/images/tlt_class1  # 类型1的训练图片目录
+val: ./coco/images/vlt_class1    # 类型1的验证图片目录
+
+# Classes
+nc: 4  # 保持原有类别数
+names:  # 保持原有类别名称
+  0: 2#-open
+  1: cords_defects
+  2: impurity
+  3: belt_cuobian
+
+# 可选：添加类别权重
+class_weights:
+  0: 1.0  
+  1: 2.0 # 增加对类型1(2cords_defects)的关注度
+  2: 1.0
+  3: 1.0
